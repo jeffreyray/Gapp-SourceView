@@ -1,0 +1,10 @@
+Changes for perl module Gapp::SourceView
+
+0.02 Aug 29 2012
+- update for use with gapp .40+
+
+0.01.1 Aug 15 2012
+- added GappSourceView trait
+
+0.01 Aug 15 2012
+- original release
