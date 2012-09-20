@@ -1,5 +1,13 @@
 Changes for perl module Gapp::SourceView
 
+
+0.03 Sep 20 2012
+- added style scheme manager
+
+0.02 Aug 29 2012
+- updated license
+- updated dependencies
+
 0.02 Aug 29 2012
 - update for use with gapp .40+
 

@@ -9,9 +9,10 @@ use MooseX::Types::Moose qw( Str Undef );
 extends 'Gapp::TextBuffer';
 
 use Gtk2::SourceView2;
-use Gapp::SourceView::Types qw( GappSourceLanguage Gtk2SourceLanguage );
+use Gapp::SourceView::Types qw( GappSourceLanguage Gtk2SourceLanguage GappStyleScheme Gtk2StyleScheme );
 
 use Gapp::SourceLanguageManager;
+use Gapp::SourceStyleSchemeManager;
 
 has '+gclass' => (
     default => 'Gtk2::SourceView2::Buffer',
@@ -33,6 +34,14 @@ has 'style_scheme' => (
     is => 'rw',
     isa => 'Maybe[Gapp::SourceStyleScheme]',
 );
+
+has 'style_scheme_manager' => (
+    is => 'rw',
+    isa => 'Gapp::SourceLanguageManager',
+    default => sub { Gapp::SourceStyleSchemeManager->new( default => 1) },
+    lazy => 1,
+);
+
 
 has 'undo_manager' => (
     is => 'rw',
@@ -60,7 +69,7 @@ before '_construct_gobject' => sub {
 after '_construct_gobject' => sub {
     my ( $self ) = @_;
     
-    my $l;
+    my $l; # language
     
     if ( ! is_Undef $self->language ) {
         if ( is_Str $self->language ) {
@@ -74,7 +83,22 @@ after '_construct_gobject' => sub {
         }
     }
     
-    $self->gobject->set_language( $l );
+    my $scheme;
+    
+    if ( ! is_Undef $self->style_scheme ) {
+        if ( is_Str $self->style_scheme ) {
+            $scheme = $self->style_scheme_manager->gobject->get_language( $self->language );
+        }
+        elsif ( is_Gtk2StyleScheme $self->style_scheme ) {
+            $scheme = $self->style_scheme;
+        }
+        elsif ( is_GappStyleScheme $self->style_scheme ) {
+            $scheme = $self->style_scheme->gobject;
+        }
+    }
+    
+    $self->gobject->set_language( $l ) if $l;
+    $self->gobject->set_style_scheme( $scheme ) if $scheme;
 };
 
 
@@ -135,7 +159,7 @@ Gapp::SourceBuffer - SourceBuffer Widget
 
 If supplied, this value will be used as the source-language for the buffer. You may pass in
 a string, which will use the B<language_manager> to find the language, a Gapp:SourceViewLanguage,
-or a Gtk2::SourceViewLanguage - the buffer will "do the right thing."
+or a Gtk2::SourceView2::Language - the buffer will "do the right thing."
 
 =back
 
@@ -148,8 +172,35 @@ or a Gtk2::SourceViewLanguage - the buffer will "do the right thing."
 =item lazy 1
 
 This is the language manager to be used when finding a language definition. The default language
-manager is an instance of Gtk2::SourceLanguageManager::get_default encapsulated in a Gapp::LanguageManager
+manager is an instance of Gtk2::SourceView2::LanguageManager::get_default encapsulated in a Gapp::LanguageManager
 object.
+
+=back
+
+=item B<style_scheme>
+
+=over 4
+
+=item isa Undef|Str|Gtk2::SourceView2::StyleScheme|Gapp:SourceStyleScheme
+
+=item default Undef
+
+If supplied, this value will be used as the style scheme for the buffer. You may pass in
+a string, which will use the B<style_scheme_manager> to find the language, a Gapp:SourceStyleScheme,
+or a Gtk2::SourceView2::StyleScheme - the buffer will "do the right thing."
+
+=back
+
+=item B<style_scheme_manager>
+
+=over 4
+
+=item isa Gapp::StyleSchemeManager
+
+=item lazy 1
+
+This is the manager to be used when finding a style scheme. The default is an instance of Gtk2::SourceView2::StyleSchemeManager::get_default
+encapsulated in a Gapp::SourceStyleSchemeManager object.
 
 =back
 
@@ -162,10 +213,11 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
+This software Copyright (c) 2010-2012 Jeffrey Ray Hallock.
 
-    This program is free software; you can redistribute it and/or
-    modify it under the same terms as Perl itself.
+This is free software, licensed under:
+
+   The Artistic License 2.0 (GPL Compatible)
 
 =cut
 

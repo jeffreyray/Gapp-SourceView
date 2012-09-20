@@ -1,6 +1,6 @@
 package Gapp::SourceView;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;
@@ -76,9 +76,10 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
+This software Copyright (c) 2010-2012 Jeffrey Ray Hallock.
 
-    This program is free software; you can redistribute it and/or
-    modify it under the same terms as Perl itself.
+This is free software, licensed under:
+
+   The Artistic License 2.0 (GPL Compatible)
 
 =cut

@@ -4,6 +4,7 @@ my $pack = Module::Package->new(
     version_from => 'lib/Gapp/SourceView.pm',
     prereq_pm => {
 	'Gapp' => 0.40,
+        'Gtk2::SourceView2',
     },
     abstract_from => 'lib/Gapp/SourceView.pm',
     author => 'Jeffrey Ray Hallock <jeffrey dot hallock at gmail dot com>',

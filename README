@@ -1,4 +1,4 @@
-Gapp-SourceView version 0.01
+Gapp-SourceView version 0.02
 ===========================
 
 See the individual module documentation for more information
@@ -20,7 +20,8 @@ This module requires these other modules and libraries:
 
 COPYRIGHT AND LICENCE
 
-   Copyright (c) 2011-2012 Jeffrey Ray Hallock.
+This software Copyright (c) 2012 Jeffrey Ray Hallock.
 
+This is free software, licensed under:
 
-
+   The Artistic License 2.0 (GPL Compatible)

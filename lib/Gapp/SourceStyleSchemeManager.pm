@@ -1,4 +1,4 @@
-package Gapp::SourceLanguageManager;
+package Gapp::SourceStyleSchemeManager;
 
 
 use Moose;
@@ -10,7 +10,7 @@ use MooseX::Types::Moose qw( Str Undef );
 use Gtk2::SourceView2;
 
 has '+gclass' => (
-    default => 'Gtk2::SourceView2::LanguageManager',
+    default => 'Gtk2::SourceView2::StyleSchemeManager',
 );
 
 has 'default' => (
@@ -20,7 +20,7 @@ has 'default' => (
 );
 
 has '+gobject' => (
-     handles => [qw( destroy hide present show show_all get_language )],
+     handles => [qw( get_scheme )],
 );
 
 
@@ -54,7 +54,7 @@ __END__
 
 =head1 NAME
 
-Gapp::SourceLanguageManager - SourceLanguageManager object
+Gapp::SourceStyleSchemeManager - SourceStyleSchemeManager object
 
 =head1 OBJECT HIERARCHY
 
@@ -62,7 +62,7 @@ Gapp::SourceLanguageManager - SourceLanguageManager object
 
 =item L<Gapp::Object>
 
-=item +-- Gapp::SourceLanguageManager
+=item +-- Gapp::SourceStyleSchemeManager
 
 =back
 
@@ -88,8 +88,8 @@ Gapp::SourceLanguageManager - SourceLanguageManager object
 
 =item default 0
 
-If set to 1, this gobject will be constructed from Gtk2::SourceView2::LanguageManager::get_default instead of
-Gtk2::SourceView2::LanguageManager::new.
+If set to 1, this gobject will be constructed from Gtk2::SourceStyleSchemeManager::get_default instead of
+Gtk2::SourceStyleSchemeManager::new.
 
 =back
 
